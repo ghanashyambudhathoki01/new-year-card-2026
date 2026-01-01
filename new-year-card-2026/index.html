@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Year Card Generator 2026</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: white;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+.firework {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 450px;
+}
+
+.card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 35px 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.18);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(255,215,0,0.5); }
+  50% { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,215,0,0.8); }
+}
+
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #ffd700;
+  font-weight: 600;
+}
+
+input[type="text"], select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.9);
+  font-size: 16px;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+input[type="text"]:focus, select:focus {
+  outline: none;
+  border-color: #ffd700;
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(255,215,0,0.5);
+}
+
+.color-picker {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.color-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.color-option:hover {
+  transform: scale(1.15);
+  border-color: white;
+}
+
+.color-option.active {
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255,215,0,0.8);
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+button {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255,215,0,0.4);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.6);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+#downloadBtn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+#shareBtn {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+}
+
+.wish-container {
+  margin-top: 25px;
+  padding: 20px;
+  border: 2px dashed #ffd700;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.5s ease;
+}
+
+.wish-container.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.wish {
+  font-size: 18px;
+  line-height: 1.6;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+}
+
+.countdown {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.countdown span {
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 5px;
+}
+
+/* Tablet landscape and smaller desktops */
+@media (max-width: 1024px) {
+  body {
+    padding: 15px;
+  }
+  
+  .container {
+    max-width: 500px;
+  }
+}
+
+/* Tablet portrait */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  .container {
+    max-width: 90%;
+  }
+  
+  .card {
+    padding: 30px 25px;
+  }
+  
+  h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+  
+  .wish {
+    font-size: 17px;
+  }
+  
+  .stats {
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .stat-number {
+    font-size: 22px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+  
+  .container {
+    max-width: 100%;
+  }
+  
+  .card {
+    padding: 25px 20px;
+  }
+  
+  h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    font-size: 13px;
+  }
+  
+  input[type="text"], select {
+    padding: 10px;
+    font-size: 15px;
+  }
+  
+  .color-picker {
+    gap: 8px;
+  }
+  
+  .color-option {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  button {
+    width: 100%;
+    min-width: auto;
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+  
+  .wish-container {
+    padding: 15px;
+    min-height: 80px;
+  }
+  
+  .wish {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  
+  .countdown {
+    padding: 12px;
+    font-size: 13px;
+  }
+  
+  .countdown span {
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  .stats {
+    flex-direction: row;
+    padding: 12px;
+    gap: 15px;
+  }
+  
+  .stat-number {
+    font-size: 20px;
+  }
+  
+  .stat-label {
+    font-size: 11px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 360px) {
+  .card {
+    padding: 20px 15px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+  
+  input[type="text"], select {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .color-option {
+    width: 32px;
+    height: 32px;
+  }
+  
+  button {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .wish {
+    font-size: 14px;
+  }
+  
+  .countdown {
+    font-size: 12px;
+  }
+  
+  .countdown span {
+    font-size: 13px;
+  }
+  
+  .stat-number {
+    font-size: 18px;
+  }
+  
+  .stat-label {
+    font-size: 10px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 500px;
+  }
+  
+  .card {
+    padding: 40px 35px;
+  }
+  
+  h2 {
+    font-size: 32px;
+  }
+  
+  .wish {
+    font-size: 19px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  body {
+    align-items: flex-start;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .card {
+    padding: 15px 20px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .input-group {
+    margin-bottom: 10px;
+  }
+  
+  .button-group {
+    margin-top: 15px;
+  }
+  
+  .wish-container {
+    margin-top: 15px;
+    padding: 12px;
+    min-height: 60px;
+  }
+  
+  .countdown {
+    margin-top: 15px;
+    padding: 10px;
+  }
+  
+  .stats {
+    margin-top: 10px;
+    padding: 10px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h2>🎉 Happy New Year 2026 🎉</h2>
+    
+    <div class="input-group">
+      <label>Recipient Name</label>
+      <input type="text" id="nameInput" placeholder="Enter name">
+    </div>
+    
+    <div class="input-group">
+      <label>Relationship</label>
+      <select id="relationSelect">
+        <option value="Friend">Friend</option>
+        <option value="Family">Family</option>
+        <option value="Colleague">Colleague</option>
+        <option value="Partner">Partner</option>
+        <option value="Teacher">Teacher</option>
+        <option value="Mentor">Mentor</option>
+      </select>
+    </div>
+    
+    <div class="input-group">
+      <label>Theme Color</label>
+      <div class="color-picker">
+        <div class="color-option active" style="background: linear-gradient(135deg, #ffd700, #ffed4e);" data-color="gold"></div>
+        <div class="color-option" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f);" data-color="red"></div>
+        <div class="color-option" style="background: linear-gradient(135deg, #4facfe, #00f2fe);" data-color="blue"></div>
+        <div class="color-option" style="background: linear-gradient(135deg, #43e97b, #38f9d7);" data-color="green"></div>
+        <div class="color-option" style="background: linear-gradient(135deg, #fa709a, #fee140);" data-color="pink"></div>
+      </div>
+    </div>
+    
+    <div class="button-group">
+      <button id="generateBtn">✨ Generate</button>
+      <button id="downloadBtn">💾 Download</button>
+      <button id="shareBtn">🔗 Share</button>
+    </div>
+    
+    <div class="wish-container" id="wishContainer">
+      <div class="wish" id="wishText"></div>
+    </div>
+    
+    <div class="countdown" id="countdown">
+      Time since New Year: <span id="timeElapsed">0d 0h 0m 0s</span>
+    </div>
+    
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number" id="cardsGenerated">0</div>
+        <div class="stat-label">Cards Created</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="fireworksLaunched">0</div>
+        <div class="stat-label">Fireworks</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const wishes = [
+  "May this year bring you happiness, peace, and success in all your endeavors!",
+  "New dreams, new goals, and new achievements await you in this fresh year!",
+  "Wishing you health, wealth, and endless smiles throughout 2026!",
+  "May every day of this year be filled with love, laughter, and prosperity!",
+  "Here's to new beginnings and wonderful adventures in the year ahead!",
+  "May this year exceed all your expectations and bring you closer to your dreams!",
+  "Wishing you 365 days of joy, success, and unforgettable moments!",
+  "May the new year light up your life with happiness and fulfillment!",
+  "Cheers to a year filled with blessings, opportunities, and beautiful memories!",
+  "May this year be your best one yet, full of growth and achievement!"
+];
+
+let cardsCount = 0;
+let fireworksCount = 0;
+let currentTheme = 'gold';
+
+const themeColors = {
+  gold: { primary: '#ffd700', secondary: '#ffed4e' },
+  red: { primary: '#ff6b6b', secondary: '#ee5a6f' },
+  blue: { primary: '#4facfe', secondary: '#00f2fe' },
+  green: { primary: '#43e97b', secondary: '#38f9d7' },
+  pink: { primary: '#fa709a', secondary: '#fee140' }
+};
+
+// Color picker functionality
+document.querySelectorAll('.color-option').forEach(option => {
+  option.addEventListener('click', function() {
+    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+    this.classList.add('active');
+    currentTheme = this.dataset.color;
+    updateTheme();
+  });
+});
+
+function updateTheme() {
+  const colors = themeColors[currentTheme];
+  document.querySelector('h2').style.color = colors.primary;
+  document.querySelector('.wish-container').style.borderColor = colors.primary;
+  document.querySelectorAll('.stat-number').forEach(el => el.style.color = colors.primary);
+  document.querySelector('.countdown span').style.color = colors.primary;
+  document.querySelectorAll('.input-group label').forEach(el => el.style.color = colors.primary);
+}
+
+// Generate card
+document.getElementById('generateBtn').addEventListener('click', function() {
+  const name = document.getElementById('nameInput').value.trim() || 'Friend';
+  const relation = document.getElementById('relationSelect').value;
+  const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+  
+  const personalizedWish = `Dear ${name},<br><br>${randomWish}<br><br>With love,<br>Your ${relation}`;
+  
+  const container = document.getElementById('wishContainer');
+  const wishText = document.getElementById('wishText');
+  
+  container.classList.remove('show');
+  
+  setTimeout(() => {
+    wishText.innerHTML = personalizedWish;
+    container.classList.add('show');
+    cardsCount++;
+    document.getElementById('cardsGenerated').textContent = cardsCount;
+    launchFireworks();
+  }, 300);
+});
+
+// Fireworks effect
+function launchFireworks() {
+  for (let i = 0; i < 30; i++) {
+    setTimeout(() => createFirework(), i * 50);
+  }
+  fireworksCount++;
+  document.getElementById('fireworksLaunched').textContent = fireworksCount;
+}
+
+function createFirework() {
+  const firework = document.createElement('div');
+  firework.className = 'firework';
+  
+  const colors = ['#ffd700', '#ff6b6b', '#4facfe', '#43e97b', '#fa709a', '#fff'];
+  firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+  
+  const startX = Math.random() * window.innerWidth;
+  const startY = window.innerHeight;
+  const endX = Math.random() * window.innerWidth;
+  const endY = Math.random() * window.innerHeight * 0.5;
+  
+  firework.style.left = startX + 'px';
+  firework.style.top = startY + 'px';
+  
+  document.body.appendChild(firework);
+  
+  const duration = 1000 + Math.random() * 1000;
+  const startTime = Date.now();
+  
+  function animate() {
+    const elapsed = Date.now() - startTime;
+    const progress = elapsed / duration;
+    
+    if (progress < 1) {
+      firework.style.left = startX + (endX - startX) * progress + 'px';
+      firework.style.top = startY + (endY - startY) * progress + 'px';
+      firework.style.opacity = 1 - progress;
+      requestAnimationFrame(animate);
+    } else {
+      firework.remove();
+    }
+  }
+  
+  animate();
+}
+
+// Download functionality
+document.getElementById('downloadBtn').addEventListener('click', function() {
+  const wishText = document.getElementById('wishText').innerHTML;
+  if (!wishText || wishText.trim() === '') {
+    showNotification('Please generate a card first!', 'error');
+    return;
+  }
+  
+  const name = document.getElementById('nameInput').value.trim() || 'Friend';
+  const relation = document.getElementById('relationSelect').value;
+  
+  // Create a clean text version
+  const cleanText = wishText
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]*>/g, '')
+    .trim();
+  
+  const content = `
+╔═══════════════════════════════════════════════════════╗
+║                                                       ║
+║           🎉 HAPPY NEW YEAR 2026 🎉                  ║
+║                                                       ║
+╚═══════════════════════════════════════════════════════╝
+
+${cleanText}
+
+═══════════════════════════════════════════════════════════
+Generated at: ${new Date().toLocaleString()}
+Theme: ${currentTheme.toUpperCase()}
+═══════════════════════════════════════════════════════════
+
+Made with ❤️ by New Year Card Generator
+`;
+  
+  try {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `new-year-card-${name.toLowerCase().replace(/\s+/g, '-')}-2026.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showNotification('Card downloaded successfully! 💾', 'success');
+  } catch (error) {
+    console.error('Download error:', error);
+    showNotification('Download failed. Please try again.', 'error');
+  }
+});
+
+// Share functionality
+document.getElementById('shareBtn').addEventListener('click', async function() {
+  const wishText = document.getElementById('wishText').innerHTML;
+  if (!wishText || wishText.trim() === '') {
+    showNotification('Please generate a card first!', 'error');
+    return;
+  }
+  
+  const name = document.getElementById('nameInput').value.trim() || 'Friend';
+  
+  // Create clean text for sharing
+  const cleanText = wishText
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]*>/g, '')
+    .trim();
+  
+  const shareText = `🎉 Happy New Year 2026 🎉\n\n${cleanText}\n\n✨ Wishing you a wonderful year ahead!`;
+  
+  // Try native share API first (mobile devices)
+  if (navigator.share && navigator.canShare && navigator.canShare({ text: shareText })) {
+    try {
+      await navigator.share({
+        title: '🎉 New Year 2026 Card',
+        text: shareText
+      });
+      showNotification('Shared successfully! 🔗', 'success');
+      return;
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        console.log('Share failed, falling back to clipboard:', err);
+      } else {
+        return; // User cancelled share
+      }
+    }
+  }
+  
+  // Fallback to clipboard
+  copyToClipboard(shareText);
+});
+
+function copyToClipboard(text) {
+  // Try modern clipboard API first
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        showNotification('Card copied to clipboard! 📋', 'success');
+      })
+      .catch(err => {
+        console.error('Clipboard API failed:', err);
+        fallbackCopyToClipboard(text);
+      });
+  } else {
+    fallbackCopyToClipboard(text);
+  }
+}
+
+function fallbackCopyToClipboard(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.top = '0';
+  textarea.style.left = '0';
+  textarea.style.width = '2em';
+  textarea.style.height = '2em';
+  textarea.style.padding = '0';
+  textarea.style.border = 'none';
+  textarea.style.outline = 'none';
+  textarea.style.boxShadow = 'none';
+  textarea.style.background = 'transparent';
+  textarea.style.opacity = '0';
+  
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  
+  try {
+    const successful = document.execCommand('copy');
+    if (successful) {
+      showNotification('Card copied to clipboard! 📋', 'success');
+    } else {
+      showNotification('Failed to copy. Please try again.', 'error');
+    }
+  } catch (err) {
+    console.error('Fallback copy failed:', err);
+    showNotification('Failed to copy. Please select and copy manually.', 'error');
+  }
+  
+  document.body.removeChild(textarea);
+}
+
+function showNotification(message, type = 'info') {
+  // Remove any existing notification
+  const existingNotif = document.querySelector('.notification');
+  if (existingNotif) {
+    existingNotif.remove();
+  }
+  
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.textContent = message;
+  
+  const colors = {
+    success: 'linear-gradient(135deg, #43e97b, #38f9d7)',
+    error: 'linear-gradient(135deg, #ff6b6b, #ee5a6f)',
+    info: 'linear-gradient(135deg, #4facfe, #00f2fe)'
+  };
+  
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${colors[type] || colors.info};
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    z-index: 10000;
+    font-weight: 600;
+    animation: slideIn 0.3s ease;
+    max-width: 300px;
+    word-wrap: break-word;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
+// Countdown timer
+function updateCountdown() {
+  const newYear = new Date('2026-01-01T00:00:00');
+  const now = new Date();
+  const diff = now - newYear;
+  
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  
+  document.getElementById('timeElapsed').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// Initial fireworks on load
+setTimeout(launchFireworks, 500);
+</script>
+</body>
+</html>
